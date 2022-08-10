@@ -20,6 +20,7 @@ export const TELE_ITEM =
 TELE_ITEM.Name.enGB.set('Teleportation Rune: GM Island')
 TELE_ITEM.Spells.get(0).Spell.set(TELE_SPELL.ID);
 TELE_ITEM.DisplayInfo.setSimpleIcon('inv_misc_gem_pearl_05');
+//===============================
 
 //COMBAT DUMMIES
 export const TEST_DUMMY =
@@ -32,4 +33,13 @@ const DUMMY_SPAWNS = TEST_DUMMY.Spawns.addGet('master-quest', 'dummy-spawn', [
     { map: 1, x: 16268.8, y: 16309.4, z: 14.14, o: 6.18 },
     { map: 1, x: 16269.2, y: 16313.3, z: 14.06, o: 5.95 },
 ])
-console.log();
+//===============================
+
+//TEST WRATH RANK 1
+export const WRATH_TEST = 
+    std.Spells.create('master-quest', 'wrath-test', 5176)
+WRATH_TEST.Power.setMana(1);
+WRATH_TEST.Attributes.IGNORE_RESISTANCES.set(true);
+WRATH_TEST.Attributes.IGNORE_HIT_RESULT.set(true);
+
+console.log(WRATH_TEST.Attributes.objectify());
