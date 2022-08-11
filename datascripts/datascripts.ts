@@ -30,6 +30,14 @@ for (let i = -100; i <= 100; i++) {
     dodge_spell.Name.enGB.set('BONUS_DODGE_' + i.toString());
     dodge_spell.Effects.get(0).setPoints(i - 1, 1, 0, 0);
 }
+
+var PARRY_BONUS = [];
+for (let i = -100; i <= 100; i++) {
+    var parry_spell = std.Spells.create('master-quest', 'parry-aura-' + (i < 0 ? 'minus' : 'plus') + Math.abs(i), 64651);
+    PARRY_BONUS[i] = parry_spell.ID.toString();
+    parry_spell.Name.enGB.set('BONUS_PARRY_' + i.toString());
+    parry_spell.Effects.get(0).setPoints(i - 1, 1, 0, 0);
+}
 //===============================
 
 //COMBAT DUMMIES
@@ -42,10 +50,10 @@ const DUMMY_SPAWNS = TEST_DUMMY.Spawns.addGet('master-quest', 'dummy-spawn', [
     { map: 1, x: 16268.5, y: 16306, z: 14.29, o: 0 },
     { map: 1, x: 16268.8, y: 16309.4, z: 14.14, o: 6.18 },
     { map: 1, x: 16269.2, y: 16313.3, z: 14.06, o: 5.95 },
-])
+]);
 TEST_DUMMY.Stats.ArmorMod.set(0);
 TEST_DUMMY.Level.set(1);
-TEST_DUMMY.Auras.set(DODGE_BONUS[100]);
+TEST_DUMMY.Auras.set(PARRY_BONUS[100]);
 //===============================
 
 console.log();
