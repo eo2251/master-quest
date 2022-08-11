@@ -1,8 +1,7 @@
 import { std } from "wow/wotlk";
 
 //TELEPORTATION ITEM
-export const TELE_SPELL =
-    std.Spells.create('master-quest', 'tele-spell', 18960);
+export const TELE_SPELL = std.Spells.create('master-quest', 'tele-spell', 18960);
 TELE_SPELL.Name.enGB.set('Teleport: GM Island');
 TELE_SPELL.Description.enGB.set('Teleports the caster to GM Island.');
 TELE_SPELL.CastTime.setSimple(4000);
@@ -15,8 +14,7 @@ TELE_SPELL.Effects.get(0).TargetPosition.set({
     map: 1
 });
 
-export const TELE_ITEM =
-    std.Items.create('master-quest', 'tele-item', 6948);
+export const TELE_ITEM = std.Items.create('master-quest', 'tele-item', 6948);
 TELE_ITEM.Name.enGB.set('Teleportation Rune: GM Island');
 TELE_ITEM.Spells.get(0).Spell.set(TELE_SPELL.ID);
 TELE_ITEM.DisplayInfo.setSimpleIcon('inv_misc_gem_pearl_05');
@@ -38,11 +36,18 @@ for (let i = -100; i <= 100; i++) {
     parry_spell.Name.enGB.set('BONUS_PARRY_' + i.toString());
     parry_spell.Effects.get(0).setPoints(i - 1, 1, 0, 0);
 }
+
+var BLOCK_BONUS = [];
+for (let i = -100; i <= 100; i++) {
+    var block_spell = std.Spells.create('master-quest', 'block-aura-' + (i < 0 ? 'minus' : 'plus') + Math.abs(i), 10021);
+    BLOCK_BONUS[i] = block_spell.ID.toString();
+    block_spell.Name.enGB.set('BONUS_BLOCK_' + i.toString());
+    block_spell.Effects.get(0).setPoints(i - 1, 1, 0, 0);
+}
 //===============================
 
 //COMBAT DUMMIES
-export const TEST_DUMMY =
-    std.CreatureTemplates.create('master-quest', 'test-dummy', 31144);
+export const TEST_DUMMY = std.CreatureTemplates.create('master-quest', 'test-dummy', 31144);
 const DUMMY_SPAWNS = TEST_DUMMY.Spawns.addGet('master-quest', 'dummy-spawn', [
     { map: 1, x: 16237, y: 16275, z: 14.76, o: 5.35 },
     { map: 1, x: 16258, y: 16282, z: 15.09, o: 5.25 },
@@ -53,7 +58,28 @@ const DUMMY_SPAWNS = TEST_DUMMY.Spawns.addGet('master-quest', 'dummy-spawn', [
 ]);
 TEST_DUMMY.Stats.ArmorMod.set(0);
 TEST_DUMMY.Level.set(1);
-TEST_DUMMY.Auras.set(PARRY_BONUS[100]);
+TEST_DUMMY.FlagsExtra.NO_BLOCK.set(false);
+TEST_DUMMY.Auras.set(PARRY_BONUS[-5] + ' ' + DODGE_BONUS[-5]);
 //===============================
 
-console.log();
+export const SMITE_PROC = std.Spells.create('master-quest', 'smite-proc', 585);
+
+const TEST_SWORD = std.Items.load(23346);
+TEST_SWORD.Delay.setAsMilliseconds(3000);
+TEST_SWORD.Damage.mod(0, dmg => {
+    dmg.min.set(28);
+    dmg.max.set(32);
+});
+
+TEST_SWORD.Spells.addMod(itemSpell => {
+    itemSpell.Spell.set(SMITE_PROC.ID);
+    itemSpell.Category.set(0);
+    itemSpell.Trigger.set("CHANCE_ON_HIT");
+    itemSpell.Charges.set("UNLIMITED");
+    itemSpell.ProcsPerMinute.set(4);
+    itemSpell.Cooldown.set(-1);
+    itemSpell.CategoryCooldown.set(-1);
+});
+
+// console.log(std.Items.load(937).objectify());
+// console.log(TEST_SWORD.objectify());
