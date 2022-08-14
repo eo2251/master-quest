@@ -65,21 +65,21 @@ TEST_DUMMY.Auras.set(PARRY_BONUS[-5] + ' ' + DODGE_BONUS[-5]);
 export const SMITE_PROC = std.Spells.create('master-quest', 'smite-proc', 585);
 
 const TEST_SWORD = std.Items.load(23346);
-TEST_SWORD.Delay.setAsMilliseconds(3000);
+TEST_SWORD.Delay.setAsMilliseconds(3300);
 TEST_SWORD.Damage.mod(0, dmg => {
     dmg.min.set(28);
     dmg.max.set(32);
 });
 
-TEST_SWORD.Spells.addMod(itemSpell => {
-    itemSpell.Spell.set(SMITE_PROC.ID);
-    itemSpell.Category.set(0);
-    itemSpell.Trigger.set("CHANCE_ON_HIT");
-    itemSpell.Charges.set("UNLIMITED");
-    itemSpell.ProcsPerMinute.set(4);
-    itemSpell.Cooldown.set(-1);
-    itemSpell.CategoryCooldown.set(-1);
-});
+// TEST_SWORD.Spells.addMod(itemSpell => {
+//     itemSpell.Spell.set(SMITE_PROC.ID);
+//     itemSpell.Category.set(0);
+//     itemSpell.Trigger.set("CHANCE_ON_HIT");
+//     itemSpell.Charges.set("UNLIMITED");
+//     itemSpell.ProcsPerMinute.set(4);
+//     itemSpell.Cooldown.set(-1);
+//     itemSpell.CategoryCooldown.set(-1);
+// });
 
 // console.log(std.Items.load(937).objectify());
 // console.log(TEST_SWORD.objectify());
